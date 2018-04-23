@@ -35,7 +35,7 @@ def new_topic(request, pk):
                 created_by = user
             )
 
-        return redirect('board_topics', pk=board.pk) #TODO:redirect to the created topic page
+            return redirect('board_topics', pk=board.pk) #TODO:redirect to the created topic page
     else:
         form = NewTopicForm()
 
