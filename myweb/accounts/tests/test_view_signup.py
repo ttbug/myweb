@@ -4,8 +4,8 @@ from django.urls import resolve
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
-from .views import signup
-from .forms import SignUpForm
+from ..views import signup
+from ..forms import SignUpForm
 
 # Create your tests here.
 class SignUpTests(TestCase):
@@ -62,7 +62,7 @@ class SuccessfulSignUpTests(TestCase):
 
 
 class InvalidSignUpTests(TestCase):
-    def setUP(self):
+    def setUp(self):
         url = reverse('signup')
         self.response = self.client.post(url, {})
 
@@ -74,5 +74,13 @@ class InvalidSignUpTests(TestCase):
         self.assertTrue(form.errors)
 
     def test_dont_create_user(self):
-        self.assertFalse(User.objects.exists())        
+        self.assertFalse(User.objects.exists())
+
+
+class SignUpFormTests(TestCase):
+    def test_form_has_field(self):
+        form = SignUpForm()
+        expected = ['username', 'email', 'password1', 'password2']
+        actul = list(form.fields)
+        self.assertSequenceEqual(expected, actul)     
 
